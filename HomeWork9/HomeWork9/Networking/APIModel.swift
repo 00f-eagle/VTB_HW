@@ -8,39 +8,37 @@
 
 import UIKit
 
+// MARK: - GlobalModel
+
+struct GlobalModel: Decodable {
+    let global: Global
+    let date: String
+    
+    enum CodingKeys: String, CodingKey {
+        case global = "Global"
+        case date = "Date"
+    }
+}
+
+// MARK: - CountriesModel
+
+struct CountriesModel: Decodable {
+    let countries: [Countries]
+    let date: String
+    
+    enum CodingKeys: String, CodingKey {
+        case countries = "Countries"
+        case date = "Date"
+    }
+}
+
 // MARK: - SummaryModel
 
 struct SummaryModel: Decodable {
     
     let countries: [Countries]
-    let global: [String:Int]
+    let global: Global
     let date: String
-    
-    struct Countries: Decodable {
-        let country: String
-        let countryCode: String
-        let slug: String
-        let newConfirmed: Int
-        let totalConfirmed: Int
-        let newDeaths: Int
-        let totalDeaths: Int
-        let newRecovered: Int
-        let totalRecovered: Int
-        let date: String
-        
-        enum CodingKeys: String, CodingKey {
-            case country = "Country"
-            case countryCode = "CountryCode"
-            case slug = "Slug"
-            case newConfirmed = "NewConfirmed"
-            case totalConfirmed = "TotalConfirmed"
-            case newDeaths = "NewDeaths"
-            case totalDeaths = "TotalDeaths"
-            case newRecovered = "NewRecovered"
-            case totalRecovered = "TotalRecovered"
-            case date = "Date"
-        }
-    }
     
     enum CodingKeys: String, CodingKey {
         case global = "Global"
@@ -83,6 +81,50 @@ struct DayOneModel: Decodable {
     }    
 }
 
+// MARK: - Global
 
+struct Global: Decodable {
+    let newConfirmed: Int
+    let totalConfirmed: Int
+    let newDeaths: Int
+    let totalDeaths: Int
+    let newRecovered: Int
+    let totalRecovered: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case newConfirmed = "NewConfirmed"
+        case totalConfirmed = "TotalConfirmed"
+        case newDeaths = "NewDeaths"
+        case totalDeaths = "TotalDeaths"
+        case newRecovered = "NewRecovered"
+        case totalRecovered = "TotalRecovered"
+    }
+}
 
+// MARK: - Countries
 
+struct Countries: Decodable {
+    let country: String
+    let countryCode: String
+    let slug: String
+    let newConfirmed: Int
+    let totalConfirmed: Int
+    let newDeaths: Int
+    let totalDeaths: Int
+    let newRecovered: Int
+    let totalRecovered: Int
+    let date: String
+    
+    enum CodingKeys: String, CodingKey {
+        case country = "Country"
+        case countryCode = "CountryCode"
+        case slug = "Slug"
+        case newConfirmed = "NewConfirmed"
+        case totalConfirmed = "TotalConfirmed"
+        case newDeaths = "NewDeaths"
+        case totalDeaths = "TotalDeaths"
+        case newRecovered = "NewRecovered"
+        case totalRecovered = "TotalRecovered"
+        case date = "Date"
+    }
+}

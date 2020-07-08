@@ -19,9 +19,71 @@ final class NetworkService {
     
     // MARK: - loadData
     
+    func getGlobal(completionHandler: @escaping (_ model: GlobalModel?) -> ()) {
+        let task = URLSession.shared.dataTask(with: Urls.summary) { data, response, error in
+
+           if error != nil || data == nil {
+                print("Client error!")
+                completionHandler(nil)
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
+                print("Server error!")
+                completionHandler(nil)
+                return
+            }
+
+            guard let mime = response.mimeType, mime == "application/json" else {
+                print("Wrong MIME type!")
+                completionHandler(nil)
+                return
+            }
+            
+            do {
+                let global = try JSONDecoder().decode(GlobalModel.self, from: data!)
+                completionHandler(global)
+            } catch {
+                print("JSON error!")
+            }
+            
+        }
+        task.resume()
+    }
+    
+    func getCountries(completionHandler: @escaping (_ model: CountriesModel?) -> ()) {
+        let task = URLSession.shared.dataTask(with: Urls.summary) { data, response, error in
+
+           if error != nil || data == nil {
+                print("Client error!")
+                completionHandler(nil)
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
+                print("Server error!")
+                completionHandler(nil)
+                return
+            }
+
+            guard let mime = response.mimeType, mime == "application/json" else {
+                print("Wrong MIME type!")
+                completionHandler(nil)
+                return
+            }
+            
+            do {
+                let countries = try JSONDecoder().decode(CountriesModel.self, from: data!)
+                completionHandler(countries)
+            } catch {
+                print("JSON error!")
+            }
+            
+        }
+        task.resume()
+    }
+    
     func getSummary(completionHandler: @escaping (_ model: SummaryModel?) -> ()) {
-        //loadData(url: Urls.summary, completionHandler: completionHandler)
-        
         let task = URLSession.shared.dataTask(with: Urls.summary) { data, response, error in
 
            if error != nil || data == nil {
